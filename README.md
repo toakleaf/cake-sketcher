@@ -1,9 +1,2 @@
-# cake-sketcher
-
-## Project setup
-```
-yarn install
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+# cake-sketch
+A cake sketch generator UI created for Oakleaf Cakes Bake Shop using Vue.js
