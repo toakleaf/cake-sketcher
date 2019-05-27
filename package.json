@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "author:": "Tyler Oakleaf",
   "license:": "GPL-3.0",
-  "homepage": "https://toakleaf.github.io/cake-sketcher",
+  "homepage": "git@github.com:toakleaf/cake-sketcher",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
