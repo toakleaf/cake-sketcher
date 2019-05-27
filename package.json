@@ -6,5 +6,10 @@
     "@vue/cli-plugin-babel": "^3.8.0",
     "@vue/cli-plugin-eslint": "^3.8.0",
     "@vue/cli-service": "^3.8.0"
+  },
+  "dependencies": {
+    "buefy": "^0.7.6",
+    "roughjs": "^3.1.0",
+    "vue": "^2.6.10"
   }
 }
