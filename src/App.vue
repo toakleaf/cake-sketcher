@@ -1,10 +1,17 @@
 <template>
-  <section id="app">Hello world</section>
+  <section class="container pad-route no-print-gutters">
+    <div class="box no-print-borders">
+      <app-cake-builder/>
+    </div>
+  </section>
 </template>
 
 <script>
+import CakeBuilder from "@/containers/CakeBuilder/CakeBuilder.vue";
 export default {
-  components: {},
+  components: {
+    "app-cake-builder": CakeBuilder
+  },
   data: function() {
     return {};
   }
