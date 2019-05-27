@@ -1,0 +1,21 @@
+<template>
+  <section id="app"></section>
+</template>
+
+<script>
+export default {
+  components: {},
+  data: function() {
+    return {};
+  }
+};
+</script>
+
+<style lang="scss">
+// CSS Debugger File:
+// @import "./assets/styles/debug.css";
+body {
+  background-color: #6b6051;
+  min-height: 100vh;
+}
+</style>
