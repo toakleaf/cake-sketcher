@@ -1,9 +1,8 @@
 {
   "name": "cake-sketcher",
   "version": "0.1.0",
-  "main:": "main.js",
   "author:": "Tyler Oakleaf",
-  "license:": "GNU",
+  "license:": "GPL-3.0",
   "homepage": "https://toakleaf.github.io/cake-sketcher",
   "private": true,
   "scripts": {
