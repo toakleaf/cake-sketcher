@@ -6,11 +6,7 @@
         <i>by</i> Oakleaf Cakes Bake Shop
       </h2>
 
-      <app-sketch
-        :tiers="[...(base ? [base] : []), ...tiers]"
-        :style="'max-height:'+ windowHeight*0.75 + 'px;'"
-        class="sketch"
-      />
+      <app-sketch :tiers="[...(base ? [base] : []), ...tiers]" class="sketch"/>
     </div>
     <div class="column">
       <div class="columns is-multiline">
@@ -46,7 +42,6 @@ export default {
   props: {},
   data: function() {
     return {
-      windowHeight: window.innerHeight,
       tiers: [
         {
           id: `${Math.floor(Math.random() * 10000)}`,
@@ -67,12 +62,7 @@ export default {
     };
   },
   computed: {},
-  methods: {},
-  mounted() {
-    window.onresize = () => {
-      this.windowHeight = window.innerHeight;
-    };
-  }
+  methods: {}
 };
 </script>
 
@@ -80,6 +70,9 @@ export default {
 @import url("https://fonts.googleapis.com/css?family=Shadows+Into+Light+Two&display=swap");
 .handwriting {
   font-family: "Shadows Into Light Two", cursive;
+}
+.sketch {
+  max-height: 78vh;
 }
 </style>
 
