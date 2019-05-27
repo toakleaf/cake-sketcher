@@ -209,6 +209,9 @@ export default {
         events: {
           "update:color": val => {
             this.fillColor = val;
+          },
+          close: () => {
+            this.emitTierUpdate({ ...this.tier, fill: this.fillColor });
           }
         },
         onCancel: () => {

@@ -2,6 +2,7 @@
   <div class="box modal-card">
     <swatches-picker :value="color" @input="emitColorHex" class="swatch"/>
     <slider-picker :value="color" @input="emitColorHex" class="slide"/>
+    <a class="button" style="margin:1em 1em 0.5em 1em;" @click="$emit('close')">close</a>
   </div>
 </template>
 
