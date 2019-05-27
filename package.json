@@ -6,8 +6,7 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "deploy": "gh-pages -d dist"
+    "build": "vue-cli-service build"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.8.0",
