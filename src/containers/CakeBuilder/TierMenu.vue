@@ -71,15 +71,16 @@
       >[–] remove</a>
       <ul>
         <li>
-          <a @click="$refs.colorInput.click()">
+          <a @click="launchColorPickerModal">
+            <!-- <a @click="$refs.colorInput.click()"> -->
             <app-color-swatch-svg :color="fillColor"/>Tier Color
-            <input
+            <!-- <input
               type="color"
               v-model="fillColor"
               style="display:none"
               ref="colorInput"
               @change="emitTierUpdate({...tier, fill: fillColor})"
-            >
+            >-->
           </a>
           <input
             type="text"
@@ -103,10 +104,16 @@ import DrawStarSVG from "@/containers/CakeBuilder/DrawStarSVG.vue";
 import DrawLineSVG from "@/containers/CakeBuilder/DrawLineSVG.vue";
 import DrawSVGIcon from "@/containers/CakeBuilder/DrawSVGIcon.vue";
 import ColorSwatchSVG from "@/containers/CakeBuilder/ColorSwatchSVG.vue";
+import ColorPicker from "@/containers/modals/ColorPicker.vue";
 
 export default {
   name: "TierMenu",
-  props: ["tier", "tierIndex", "numTiers", "servingSize"],
+  components: {
+    "app-draw-star-svg": DrawStarSVG,
+    "app-draw-line-svg": DrawLineSVG,
+    "app-draw-svg-icon": DrawSVGIcon,
+    "app-color-swatch-svg": ColorSwatchSVG
+  },
   props: {
     tier: {
       validator: function(obj) {
@@ -130,12 +137,6 @@ export default {
       type: Number,
       default: 13
     }
-  },
-  components: {
-    "app-draw-star-svg": DrawStarSVG,
-    "app-draw-line-svg": DrawLineSVG,
-    "app-draw-svg-icon": DrawSVGIcon,
-    "app-color-swatch-svg": ColorSwatchSVG
   },
   data: function() {
     return {
@@ -198,6 +199,22 @@ export default {
       this.w = null;
       this.h = null;
       this.s = null;
+    },
+    launchColorPickerModal: function() {
+      this.$modal.open({
+        parent: this,
+        component: ColorPicker,
+        props: { fill: this.fillColor },
+        hasModalCard: true,
+        events: {
+          "update:color": val => {
+            this.fillColor = val;
+          }
+        },
+        onCancel: () => {
+          this.emitTierUpdate({ ...this.tier, fill: this.fillColor });
+        }
+      });
     }
   }
 };
