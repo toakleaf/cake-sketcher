@@ -2,6 +2,9 @@
 @import '~bulma/sass/utilities/_all';
 
 // Fonts
+@import url('https://fonts.googleapis.com/css?family=Josefin+Slab&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
+
 $family-serif: 'Josefin Slab', serif;
 $family-sans-serif: 'Open Sans', sans-serif;
 $family-primary: $family-sans-serif;
