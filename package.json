@@ -1,10 +1,15 @@
 {
   "name": "cake-sketcher",
   "version": "0.1.0",
+  "main:": "main.js",
+  "author:": "Tyler Oakleaf",
+  "license:": "GNU",
+  "homepage": "https://toakleaf.github.io/cake-sketcher",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build"
+    "build": "vue-cli-service build",
+    "deploy": "gh-pages -d dist"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.8.0",
@@ -16,6 +21,7 @@
   "dependencies": {
     "buefy": "^0.7.6",
     "bulma-extensions": "^6.2.7",
+    "gh-pages": "^2.0.1",
     "roughjs": "^3.1.0",
     "vue": "^2.6.10"
   }
