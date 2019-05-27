@@ -115,7 +115,7 @@ $speed-slower: 300ms !default; //tabs
 }
 @include mobile {
   .pad-route {
-    padding: 4rem 0.25rem 0.5rem 0.25rem;
+    padding: 0.25rem 0.25rem 0.5rem 0.25rem;
   }
   .tabs ul {
     flex-direction: column;
