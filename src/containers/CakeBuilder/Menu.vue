@@ -12,10 +12,10 @@
       />
     </div>
     <div class="column is-half-tablet is-one-third-desktop has-text-centered">
-      <a @click="emitAddition(0)">&#8624; Add Tier Above</a>
+      <!-- <a @click="emitAddition(0)">&#8624; Add Tier Above</a> -->
     </div>
     <div class="column is-half-tablet is-one-third-desktop has-text-centered">
-      <a @click="emitAddition(tiersDesc.length)">&#8626; Add Tier Below</a>
+      <!-- <a @click="emitAddition(tiersDesc.length)">&#8626; Add Tier Below</a> -->
     </div>
     <div class="column is-full-tablet is-one-third-desktop has-text-centered">
       <a class="is-block" @click="emitAddition(0)">&#8624; Add Tier Above</a>
