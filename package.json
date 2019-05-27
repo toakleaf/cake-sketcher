@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "author:": "Tyler Oakleaf",
   "license:": "GPL-3.0",
-  "homepage": "git@github.com:toakleaf/cake-sketcher",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -20,7 +19,6 @@
   "dependencies": {
     "buefy": "^0.7.6",
     "bulma-extensions": "^6.2.7",
-    "gh-pages": "^2.0.1",
     "roughjs": "^3.1.0",
     "vue": "^2.6.10"
   }
