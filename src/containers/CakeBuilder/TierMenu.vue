@@ -88,8 +88,7 @@
             size="12"
             class="has-text-link has-text-left"
             style="padding-left:0.5em"
-            @blur="emitTierUpdate({...tier, fill: fillColor})"
-            @keydown.enter="emitTierUpdate({...tier, fill: fillColor})"
+            @change="emitTierUpdate({...tier, fill: fillColor})"
             @keydown.delete="emitTierUpdate({...tier, fill: null})"
           >
         </li>
