@@ -6,7 +6,7 @@ Vue.use(Buefy);
 
 Vue.config.productionTip = false;
 
-require('@/assets/styles/main.scss');
+require('./assets/styles/main.scss');
 
 new Vue({
   render: h => h(App)
