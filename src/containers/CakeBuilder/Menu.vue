@@ -1,5 +1,12 @@
 <template>
-  <div class="menu columns is-multiline is-gapless">
+  <div class="columns is-multiline is-gapless">
+    <div class="column is-full">
+      <app-menu-toolbar
+        :tiers="tiersDesc"
+        @update:tiers="$emit('update:tiers', $event)"
+        @reset="$emit('reset'); openTierMenus = []"
+      />
+    </div>
     <div class="column is-full">
       <app-tier-menu
         v-for="(tier, i) in tiersDesc"
@@ -13,26 +20,18 @@
         @delete:tier="emitDeletion(i)"
       />
     </div>
-    <div class="column is-half-tablet is-one-third-desktop has-text-centered">
-      <!-- <a @click="emitAddition(0)">&#8624; Add Tier Above</a> -->
-    </div>
-    <div class="column is-half-tablet is-one-third-desktop has-text-centered">
-      <!-- <a @click="emitAddition(tiersDesc.length)">&#8626; Add Tier Below</a> -->
-    </div>
-    <div class="column is-full-tablet is-one-third-desktop has-text-centered">
-      <a class="is-block" @click="emitAddition(0)">&#8624; Add Tier Above</a>
-      <a class="is-block" @click="emitAddition(tiersDesc.length)">&#8626; Add Tier Below</a>
-    </div>
   </div>
 </template>
 
 <script>
+import MenuToolbar from "@/containers/CakeBuilder/MenuToolbar.vue";
 import TierMenu from "@/containers/CakeBuilder/TierMenu.vue";
 
 export default {
   name: "Menu",
   props: ["tiers"],
   components: {
+    "app-menu-toolbar": MenuToolbar,
     "app-tier-menu": TierMenu
   },
   data: function() {
@@ -113,9 +112,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.menu {
-  font-family: "Shadows Into Light Two", cursive;
-  // text-align: center;
-}
 </style>
 

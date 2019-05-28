@@ -8,21 +8,24 @@
 
       <app-sketch :tiers="[...(base ? [base] : []), ...tiers]" class="sketch"/>
     </div>
-    <div class="column">
+    <div class="column handwriting">
       <div class="columns is-multiline">
         <div class="column is-two-thirds">
-          <h4 class="subtitle handwriting is-size-3">New Cake Sketch 1</h4>
+          <h4 class="subtitle is-size-3">New Cake Sketch 1</h4>
         </div>
         <div class="column">
-          <h4 class="subtitle handwriting is-size-6 has-text-right is-marginless">Total Servings</h4>
-          <h4 class="subtitle handwriting is-size-6 has-text-right is-marginless">$ 1 money</h4>
+          <h4 class="subtitle is-size-6 has-text-right is-marginless">
+            <span style="position:relative;top:-0.2em;">&#8776;</span>
+            {{totalServings}} Servings
+          </h4>
+          <h4 class="subtitle is-size-6 has-text-right is-marginless">$ 1 money</h4>
         </div>
         <div class="column is-full is-paddingless" style="margin:-0.25em 0;">
           <app-draw-line-svg/>
           <app-draw-line-svg style="margin:-0.65em 0;"/>
         </div>
       </div>
-      <app-menu :tiers.sync="tiers"/>
+      <app-menu :tiers.sync="tiers" @reset="restoreDefault()"/>
     </div>
   </div>
 </template>
@@ -31,6 +34,7 @@
 import Sketch from "@/containers/CakeBuilder/Sketch.vue";
 import Menu from "@/containers/CakeBuilder/Menu.vue";
 import DrawLineSVG from "@/containers/CakeBuilder/DrawLineSVG.vue";
+import getServings from "@/assets/scripts/getServings";
 
 export default {
   components: {
@@ -39,41 +43,63 @@ export default {
     "app-draw-line-svg": DrawLineSVG
   },
   name: "CakeBuilder",
-  props: {},
+  props: {
+    defaultCake: {
+      default: function() {
+        return {
+          tiers: [
+            {
+              id: `i${Math.floor(Math.random() * 10000)}`,
+              key: `k${Math.floor(Math.random() * 10000)}`,
+              width: 9,
+              height: 4
+            },
+            {
+              id: `i${Math.floor(Math.random() * 10000)}`,
+              key: `k${Math.floor(Math.random() * 10000)}`,
+              width: 6,
+              height: 4
+            }
+          ],
+          base: {
+            id: `i${Math.floor(Math.random() * 10000)}`,
+            key: `k${Math.floor(Math.random() * 10000)}`,
+            width: 12,
+            height: 0.5
+          }
+        };
+      }
+    }
+  },
   data: function() {
     return {
-      tiers: [
-        {
-          id: `i${Math.floor(Math.random() * 10000)}`,
-          key: `k${Math.floor(Math.random() * 10000)}`,
-          width: 8,
-          height: 4
-        },
-        {
-          id: `i${Math.floor(Math.random() * 10000)}`,
-          key: `k${Math.floor(Math.random() * 10000)}`,
-          width: 5,
-          height: 4
-        }
-      ],
-      base: {
-        id: `i${Math.floor(Math.random() * 10000)}`,
-        key: `k${Math.floor(Math.random() * 10000)}`,
-        width: 12,
-        height: 0.5
-      }
+      tiers: [],
+      base: {}
     };
   },
-  computed: {},
-  methods: {}
+  computed: {
+    totalServings: function() {
+      return this.tiers
+        .map(t => getServings(t.width, t.height, (t.shape = "round")))
+        .reduce((a, n) => a + n);
+    }
+  },
+  methods: {
+    getServings: function(width, height, servingSize, shape) {
+      return getServings(width, height, servingSize, shape);
+    },
+    restoreDefault: function() {
+      this.tiers = this.defaultCake.tiers;
+      this.base = this.defaultCake.base;
+    }
+  },
+  created: function() {
+    this.restoreDefault();
+  }
 };
 </script>
 
 <style lang="scss" scoped>
-@import url("https://fonts.googleapis.com/css?family=Shadows+Into+Light+Two&display=swap");
-.handwriting {
-  font-family: "Shadows Into Light Two", cursive;
-}
 .sketch {
   max-height: 78vh;
 }

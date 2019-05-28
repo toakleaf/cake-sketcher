@@ -7,7 +7,6 @@
       @close="$emit('close')"
     >
       <h3 class="is-size-4" slot="trigger" aria-controls="contentIdForA11y1">
-        <!-- {{width}}{{tier.width}} -->
         <span v-if="tiers.length === 1">Tier</span>
         <span v-else-if="tierIndex === tiers.length - 1">Bottom tier</span>
         <span v-else-if="!tierIndex">Top tier</span>
@@ -33,7 +32,11 @@
           />
 
           <select class="has-text-link" v-model="width" @change="emitTierUpdate({...tier, width})">
-            <option v-for="n in 14" :key="n" :value="n + 4">{{n + 4}}"</option>
+            <option
+              v-for="n in tierWidthLimits[1] + 1 - tierWidthLimits[0]"
+              :key="n"
+              :value="n - 1 + tierWidthLimits[0]"
+            >{{n - 1 + tierWidthLimits[0]}}"</option>
           </select>
           wide x
           <select
@@ -61,11 +64,15 @@
             c-8.944-3.481-16.597-8.423-20.253-17.888c-5.484-14.198,1.395-30.242,15.458-36.06c13.828-5.723,29.677,0.394,36.056,13.919
             c6.527,13.839,0.91,30.154-12.785,37.03c-2.169,1.087-4.424,2.003-6.64,2.999v7.148L171.036,64.271z"
           />
-          <span style="position:relative;top:-0.2em; padding-right:0.4em;">&#8776;</span>
-          <input type="text" :value="getServings()" size="3" maxnumTiers="3" class="has-text-link"> servings
+          <span style="position:relative;top:-0.2em;">&#8776;</span>
+          {{getServings()}} servings
           <span class="is-size-7">
-            <a>[+]</a> /
-            <a>[–]</a>
+            <a
+              @click="emitTierUpdate({...tier, width: tier.width < tierWidthLimits[1] ? tier.width + 1 : tier.width})"
+            >[+]</a> /
+            <a
+              @click="emitTierUpdate({...tier, width: tier.width > tierWidthLimits[0] ? tier.width - 1 : tier.width})"
+            >[–]</a>
           </span>
         </li>
       </ul>
@@ -77,15 +84,7 @@
       <ul>
         <li>
           <a @click="launchColorPickerModal">
-            <!-- <a @click="$refs.colorInput.click()"> -->
             <app-color-swatch-svg :color="fillColor"/>Tier Color
-            <!-- <input
-              type="color"
-              v-model="fillColor"
-              style="display:none"
-              ref="colorInput"
-              @change="emitTierUpdate({...tier, fill: fillColor})"
-            >-->
           </a>
           <input
             type="text"
@@ -109,6 +108,7 @@ import DrawLineSVG from "@/containers/CakeBuilder/DrawLineSVG.vue";
 import DrawSVGIcon from "@/containers/CakeBuilder/DrawSVGIcon.vue";
 import ColorSwatchSVG from "@/containers/CakeBuilder/ColorSwatchSVG.vue";
 import ColorPicker from "@/containers/modals/ColorPicker.vue";
+import getServings from "@/assets/scripts/getServings";
 
 export default {
   name: "TierMenu",
@@ -144,13 +144,19 @@ export default {
       type: Number,
       default: 0
     },
-    servingSize: {
-      type: Number,
-      default: 13
-    },
     open: {
       type: Boolean,
       default: false
+    },
+    tierWidthLimits: {
+      validator: function(nums) {
+        return (
+          nums && nums.every(n => typeof n === "number") && nums.length === 2
+        );
+      },
+      default: function() {
+        return [5, 18];
+      }
     }
   },
   data: function() {
@@ -199,11 +205,12 @@ export default {
     }
   },
   methods: {
-    getServings: function() {
-      if (!this.shape || this.shape === "round") {
-        const r = this.width / 2;
-        return Math.round((Math.PI * r * r * this.height) / this.servingSize);
-      }
+    getServings: function(
+      width = this.width,
+      height = this.height,
+      shape = this.shape
+    ) {
+      return getServings(width, height, shape);
     },
     emitTierUpdate: function(obj) {
       this.$emit("update:tier", {
