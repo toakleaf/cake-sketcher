@@ -52,15 +52,15 @@ export default {
         switch (index) {
           case 0: //top
             newTier.width =
-              this.tiers[index].width <= this.minTierWidth + 2
+              this.tiers[index].width <= this.minTierWidth + 3
                 ? this.minTierWidth
-                : this.tiers[index].width - 2;
+                : this.tiers[index].width - 3;
             break;
           case this.tiers.length: //bottom
             newTier.width =
-              this.tiers[index - 1].width >= this.maxTierWidth - 2
+              this.tiers[index - 1].width >= this.maxTierWidth - 3
                 ? this.maxTierWidth
-                : this.tiers[index - 1].width + 2;
+                : this.tiers[index - 1].width + 3;
             if (newTier.width > this.base.width) {
               //if bottom too big, rescale base
               this.$emit("update:base", {
@@ -70,7 +70,6 @@ export default {
               });
             }
             break;
-
           default:
             //middle or > array length
             newTier.width =
