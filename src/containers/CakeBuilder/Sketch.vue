@@ -17,6 +17,7 @@
       <app-tier
         :width="tier.width"
         :height="tier.height"
+        :shape="tier.shape"
         :fill="tier.fill"
         :fillStyle="tier.fillStyle"
         :fillWeight="tier.fillWeight"
@@ -83,7 +84,8 @@ export default {
           id: `i${Math.floor(Math.random() * 10000)}`,
           key: `k${Math.floor(Math.random() * 10000)}`,
           width: 8,
-          height: 4
+          height: 4,
+          shape: "round"
         }
       ]
     }

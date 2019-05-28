@@ -23,6 +23,10 @@ export default {
       type: Number,
       default: 4
     },
+    shape: {
+      type: String,
+      default: "round"
+    },
     pad: {
       type: Number,
       default: 2
@@ -87,6 +91,7 @@ export default {
       return this.ptWidth / 2 / this.radiusRatio;
     },
     pathString: function() {
+      // Round
       // 16x4 tier w/ 18.5 pt inch
       //   M 2,34
       //   a148,32 0 1,0 296,0
@@ -94,17 +99,44 @@ export default {
       //   v74
       //   a148,32 0 1,0 296,0
       //   v-74
-      return `M ${this.pad},${this.yRadius + this.pad}
+      if (this.shape === "round")
+        return `M ${this.pad},${this.yRadius + this.pad}
       a${this.ptWidth / 2},${this.yRadius} 0 1,0 ${this.ptWidth},0
       a${this.ptWidth / 2},${this.yRadius} 0 1,0 -${this.ptWidth},0
       v${this.ptHeight}
       a${this.ptWidth / 2},${this.yRadius} 0 1,0 ${this.ptWidth},0
       v-${this.ptHeight}`;
+      // Square
+      // 16x4 tier w/ 18.5 pt inch
+      //   M2,     64,
+      //   l0,     74,
+      //   l296,   0, //I broke this into multiple paths for drawing
+      //   l0,     -74,
+      //   l-296,  0, //I broke this into multiple paths for drawing
+      //   l24,    -62,
+      //   l248,   0,
+      //   l24,    62,
+      if (this.shape === "square") {
+        //create random seam line to make scribble nicer
+        const randWidth = Math.floor(Math.random() * this.ptWidth);
+        const randWidth2 = Math.floor(Math.random() * this.ptWidth);
+        return `
+            M${this.pad}, ${this.yRadius * 2 + this.pad},
+            l0,     ${this.ptHeight},
+            l${randWidth},   0,
+            l${this.ptWidth - randWidth},   0,
+            l0,     -${this.ptHeight},
+            l-${randWidth},  0,
+            l-${this.ptWidth - randWidth},  0,
+            l${this.ptWidth * (1 / 12)},    -${this.ptWidth / this.radiusRatio},
+            l${this.ptWidth * (5 / 6)},   0,
+            l${this.ptWidth * (1 / 12)},    ${this.ptWidth / this.radiusRatio}`;
+      }
     },
     tier: function() {
       const rs = rough.svg(this.$refs.tier);
       return rs.path(this.pathString, {
-        bowing: this.bowing,
+        bowing: this.shape === "round" ? this.bowing : this.bowing * 0.5,
         roughness: this.roughness,
         stroke: this.strokeColor,
         strokeWidth: this.strokeWidth,

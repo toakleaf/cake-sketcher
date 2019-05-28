@@ -43,7 +43,8 @@ export default {
         id: `i${Math.floor(Math.random() * 10000)}`,
         key: `k${Math.floor(Math.random() * 10000)}`,
         width: 8,
-        height: 4
+        height: 4,
+        shape: "round"
       }
     ) {
       if (this.tiers.length) {

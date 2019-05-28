@@ -63,8 +63,9 @@ export default {
   methods: {
     emitChanges: function(i, val) {
       if (i < 0) return this.$emit("update:base", val);
-      const out = this.tiersDesc.slice();
-      out[i] = val;
+      let out = this.tiersDesc.slice();
+      out[i] = { ...val };
+
       if (i === out.length - 1 && out[i].width > this.base.width) {
         // if bottom tier and too big, rescale base
         this.$emit("update:base", {

@@ -25,7 +25,12 @@
           <app-draw-line-svg style="margin:-0.65em 0;"/>
         </div>
       </div>
-      <app-menu :tiers.sync="tiers" :base.sync="base" @reset="restoreDefault()"/>
+      <app-menu
+        :tiers.sync="tiers"
+        :base.sync="base"
+        @reset="restoreDefault()"
+        @update:tiers="find = $event"
+      />
     </div>
   </div>
 </template>
@@ -52,20 +57,23 @@ export default {
               id: `i${Math.floor(Math.random() * 10000)}`,
               key: `k${Math.floor(Math.random() * 10000)}`,
               width: 9,
-              height: 4
+              height: 4,
+              shape: "round"
             },
             {
               id: `i${Math.floor(Math.random() * 10000)}`,
               key: `k${Math.floor(Math.random() * 10000)}`,
               width: 6,
-              height: 4
+              height: 4,
+              shape: "round"
             }
           ],
           base: {
             id: `i${Math.floor(Math.random() * 10000)}`,
             key: `k${Math.floor(Math.random() * 10000)}`,
             width: 12,
-            height: 0.3
+            height: 0.3,
+            shape: "round"
           }
         };
       }
@@ -73,6 +81,7 @@ export default {
   },
   data: function() {
     return {
+      find: [],
       tiers: [],
       base: {}
     };
@@ -80,7 +89,7 @@ export default {
   computed: {
     totalServings: function() {
       return this.tiers
-        .map(t => getServings(t.width, t.height, (t.shape = "round")))
+        .map(t => getServings(t.width, t.height, t.shape))
         .reduce((a, n) => a + n);
     }
   },

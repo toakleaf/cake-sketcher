@@ -17,7 +17,11 @@
       <ul>
         <li>
           <app-draw-star-svg/>Shape:
-          <select class="has-text-link" :vale="shape">
+          <select
+            class="has-text-link"
+            v-model="shape"
+            @change="emitBaseUpdate({...base, shape})"
+          >
             <option value="round">Round</option>
             <option value="square">Square</option>
           </select>

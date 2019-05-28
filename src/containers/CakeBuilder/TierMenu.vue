@@ -20,7 +20,11 @@
       <ul>
         <li>
           <app-draw-star-svg/>Shape:
-          <select class="has-text-link" :vale="shape">
+          <select
+            class="has-text-link"
+            v-model="shape"
+            @change="emitTierUpdate({...tier, shape})"
+          >
             <option value="round">Round</option>
             <option value="square">Square</option>
             <option value="topsyturvy">Topsy Turvy</option>
@@ -156,7 +160,7 @@ export default {
     return {
       w: null,
       h: null,
-      shape: null,
+      shape: "square",
       fill: null
     };
   },
@@ -217,7 +221,7 @@ export default {
   },
   mounted: function() {
     this.fill = this.tier.fill ? this.tier.fill : "#FFF";
-    this.shape = this.tier.shape ? this.tier.shape : "round";
+    this.shape = this.tier.shape ? this.tier.shape : "square";
     this.width = this.tier.width;
     this.height = this.tier.height;
   }
