@@ -23,7 +23,7 @@ $turquoise: #08be95;
 $blue: #436799;
 $green: #5ec538;
 $yellow: #e9cb59;
-$red: #dc556a;
+$red: #b71c1c;
 $peach: #feddc9;
 $peach-invert: findColorInvert($peach);
 
@@ -75,7 +75,7 @@ $colors: (
     $warning-invert
   ),
   'danger': (
-    $danger,
+    $red,
     $danger-invert
   ),
   'link': (

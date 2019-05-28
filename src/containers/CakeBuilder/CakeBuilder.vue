@@ -25,7 +25,7 @@
           <app-draw-line-svg style="margin:-0.65em 0;"/>
         </div>
       </div>
-      <app-menu :tiers.sync="tiers" @reset="restoreDefault()"/>
+      <app-menu :tiers.sync="tiers" :base.sync="base" @reset="restoreDefault()"/>
     </div>
   </div>
 </template>

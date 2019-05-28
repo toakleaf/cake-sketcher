@@ -194,12 +194,6 @@ export default {
         ...obj,
         key: `k${Math.floor(Math.random() * 10000)}`
       });
-      this.clearLocal();
-    },
-    clearLocal: function() {
-      this.w = null;
-      this.h = null;
-      this.s = null;
     },
     launchColorPickerModal: function() {
       this.$modal.open({

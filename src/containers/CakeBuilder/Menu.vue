@@ -4,7 +4,7 @@
       <app-menu-toolbar
         :tiers="tiersDesc"
         @update:tiers="$emit('update:tiers', $event)"
-        @reset="$emit('reset'); openTierMenus = []"
+        @reset="$emit('reset'); openMenus = []"
       />
     </div>
     <div class="column is-full">
@@ -14,11 +14,19 @@
         :tierIndex="i"
         :tiers="tiersDesc"
         :tier="tier"
-        :open="openTierMenus.some(id => id === tier.id)"
-        @open="openTierMenus.push(tier.id)"
-        @close="openTierMenus = openTierMenus.filter(id => id !== tier.id)"
+        :open="openMenus.some(id => id === tier.id)"
+        @open="openMenus.push(tier.id)"
+        @close="openMenus = openMenus.filter(id => id !== tier.id)"
         @update:tier="emitChanges(i, ...arguments)"
         @delete:tier="emitDeletion(i)"
+      />
+      <app-base-menu
+        :key="base.key"
+        :base="base"
+        :open="openMenus.some(id => id === base.id)"
+        @open="openMenus.push(base.id)"
+        @close="openMenus = openMenus.filter(id => id !== base.id)"
+        @update:base="emitChanges(-1, ...arguments)"
       />
     </div>
   </div>
@@ -27,17 +35,19 @@
 <script>
 import MenuToolbar from "@/containers/CakeBuilder/MenuToolbar.vue";
 import TierMenu from "@/containers/CakeBuilder/TierMenu.vue";
+import BaseMenu from "@/containers/CakeBuilder/BaseMenu.vue";
 
 export default {
   name: "Menu",
-  props: ["tiers"],
+  props: ["tiers", "base"],
   components: {
     "app-menu-toolbar": MenuToolbar,
-    "app-tier-menu": TierMenu
+    "app-tier-menu": TierMenu,
+    "app-base-menu": BaseMenu
   },
   data: function() {
     return {
-      openTierMenus: [],
+      openMenus: [],
       minTierWidth: 5,
       maxTierWidth: 18
     };
@@ -50,6 +60,7 @@ export default {
   },
   methods: {
     emitChanges: function(i, val) {
+      if (i < 0) this.$emit("update:base", val);
       const out = this.tiersDesc.slice();
       out[i] = val;
       this.$emit("update:tiers", out.reverse());
@@ -97,9 +108,7 @@ export default {
       this.$emit("update:tiers", out);
     },
     emitDeletion: function(i) {
-      this.openTierMenus = this.openTierMenus.filter(
-        id => id !== this.tiersDesc[i].id
-      );
+      this.openMenus = this.openMenus.filter(id => id !== this.tiersDesc[i].id);
       let out = this.tiersDesc.slice();
       out.splice(i, 1);
       out.reverse();
@@ -107,7 +116,7 @@ export default {
     }
   },
   beforeMount: function() {
-    this.openTierMenus.push(this.tiersDesc[0].id);
+    this.openMenus.push(this.tiersDesc[0].id);
   }
 };
 </script>
