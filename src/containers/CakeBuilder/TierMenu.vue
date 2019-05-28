@@ -1,10 +1,15 @@
 <template>
   <div class="tier-menu-item">
-    <b-collapse :open="false" aria-id="contentIdForA11y1">
-      <h3 class="is-size-4" slot="trigger" aria-controls="contentIdForA11y1" @click="open = !open">
+    <b-collapse
+      :open="open"
+      aria-id="contentIdForA11y1"
+      @open="$emit('open')"
+      @close="$emit('close')"
+    >
+      <h3 class="is-size-4" slot="trigger" aria-controls="contentIdForA11y1">
         <!-- {{width}}{{tier.width}} -->
-        <span v-if="numTiers === 1">Tier</span>
-        <span v-else-if="tierIndex === numTiers - 1">Bottom tier</span>
+        <span v-if="tiers.length === 1">Tier</span>
+        <span v-else-if="tierIndex === tiers.length - 1">Bottom tier</span>
         <span v-else-if="!tierIndex">Top tier</span>
         <span v-else>Tier #{{tierIndex + 1}}</span>
         <span class="icon is-pulled-right is-medium">
@@ -12,6 +17,7 @@
           <app-draw-svg-icon path="M1,150,l149,149,l149,-149,l-149,149,l-149,-149" v-show="open"/>
         </span>
         <span class="is-size-7 is-pulled-right" style="margin:1em 1em 0 0">{{width}}" x {{height}}"</span>
+        {{open}}
       </h3>
       <ul>
         <li>
@@ -114,32 +120,43 @@ export default {
     "app-color-swatch-svg": ColorSwatchSVG
   },
   props: {
-    tier: {
+    tiers: {
       validator: function(obj) {
-        return (
-          obj.width &&
-          obj.height &&
-          typeof obj.width === "number" &&
-          typeof obj.height === "number"
+        return obj.every(
+          o =>
+            o.width &&
+            o.height &&
+            o.id &&
+            o.key &&
+            typeof o.width === "number" &&
+            typeof o.height === "number"
         );
-      }
+      },
+      default: [
+        {
+          id: `i${Math.floor(Math.random() * 10000)}`,
+          key: `k${Math.floor(Math.random() * 10000)}`,
+          width: 8,
+          height: 4
+        }
+      ]
     },
     tierIndex: {
-      type: Number,
-      default: 0
-    },
-    numTiers: {
       type: Number,
       default: 0
     },
     servingSize: {
       type: Number,
       default: 13
+    },
+    open: {
+      type: Boolean,
+      default: false
     }
   },
   data: function() {
     return {
-      open: false,
+      // open: false,
       w: null,
       h: null,
       s: null,
@@ -147,6 +164,9 @@ export default {
     };
   },
   computed: {
+    tier: function() {
+      return this.tiers[this.tierIndex];
+    },
     width: {
       get: function() {
         return this.w ? this.w : this.tier.width;
@@ -190,7 +210,7 @@ export default {
     emitTierUpdate: function(obj) {
       this.$emit("update:tier", {
         ...obj,
-        id: `${Math.floor(Math.random() * 10000)}`
+        key: `k${Math.floor(Math.random() * 10000)}`
       });
       this.clearLocal();
     },
@@ -219,6 +239,10 @@ export default {
       });
     }
   }
+  // mounted: function() {
+  //   console.log(this.show, this.tier.id);
+  //   this.open = this.show;
+  // }
 };
 </script>
 

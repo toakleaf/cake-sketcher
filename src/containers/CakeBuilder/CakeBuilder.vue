@@ -44,18 +44,21 @@ export default {
     return {
       tiers: [
         {
-          id: `${Math.floor(Math.random() * 10000)}`,
+          id: `i${Math.floor(Math.random() * 10000)}`,
+          key: `k${Math.floor(Math.random() * 10000)}`,
           width: 8,
           height: 4
         },
         {
-          id: `${Math.floor(Math.random() * 10000)}`,
+          id: `i${Math.floor(Math.random() * 10000)}`,
+          key: `k${Math.floor(Math.random() * 10000)}`,
           width: 5,
           height: 4
         }
       ],
       base: {
-        id: `${Math.floor(Math.random() * 10000)}`,
+        id: `i${Math.floor(Math.random() * 10000)}`,
+        key: `k${Math.floor(Math.random() * 10000)}`,
         width: 12,
         height: 0.5
       }

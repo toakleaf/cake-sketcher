@@ -9,7 +9,7 @@
   >
     <svg
       v-for="(tier, i) in tiers"
-      :key="tier.id"
+      :key="tier.key"
       class="tier"
       :x="(cakeWidth - (tier.width * inch)) / 2 - pad"
       :y="getTierPosition(i)"
@@ -73,13 +73,15 @@ export default {
             o.width &&
             o.height &&
             o.id &&
+            o.key &&
             typeof o.width === "number" &&
             typeof o.height === "number"
         );
       },
       default: [
         {
-          id: `${Math.floor(Math.random() * 10000)}`,
+          id: `i${Math.floor(Math.random() * 10000)}`,
+          key: `k${Math.floor(Math.random() * 10000)}`,
           width: 8,
           height: 4
         }

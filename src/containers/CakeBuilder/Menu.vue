@@ -1,12 +1,15 @@
 <template>
   <div class="menu columns is-multiline is-gapless">
     <div class="column is-full">
+      {{openTierMenus}}
       <app-tier-menu
         v-for="(tier, i) in tiersDesc"
-        :key="i"
-        :tier="tier"
+        :key="tier.key"
         :tierIndex="i"
-        :numTiers="tiers.length"
+        :tiers="tiersDesc"
+        :open="openTierMenus.some(id => id === tier.id)"
+        @open="openTierMenus.push(tier.id)"
+        @close="openTierMenus = openTierMenus.filter(id => id !== tier.id)"
         @update:tier="emitChanges(i, ...arguments)"
         @delete:tier="emitDeletion(i)"
       />
@@ -35,7 +38,7 @@ export default {
   },
   data: function() {
     return {
-      open: false,
+      openTierMenus: [],
       minTierWidth: 5,
       maxTierWidth: 18
     };
@@ -55,7 +58,8 @@ export default {
     emitAddition: function(
       index = 0,
       newTier = {
-        id: `${Math.floor(Math.random() * 10000)}`,
+        id: `i${Math.floor(Math.random() * 10000)}`,
+        key: `k${Math.floor(Math.random() * 10000)}`,
         width: 8,
         height: 4
       }
@@ -94,11 +98,17 @@ export default {
       this.$emit("update:tiers", out);
     },
     emitDeletion: function(i) {
+      this.openTierMenus = this.openTierMenus.filter(
+        id => id !== this.tiersDesc[i].id
+      );
       let out = this.tiersDesc.slice();
       out.splice(i, 1);
       out.reverse();
       this.$emit("update:tiers", out);
     }
+  },
+  beforeMount: function() {
+    this.openTierMenus.push(this.tiersDesc[0].id);
   }
 };
 </script>
