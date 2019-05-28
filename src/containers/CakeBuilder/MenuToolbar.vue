@@ -1,15 +1,18 @@
 <template>
-  <div class="columns is-multiline handwriting is-size-7 no-print" style="margin-bottom:0.35em">
-    <div class="column is-one-third-tablet has-text-centered is-paddingless">
+  <div
+    class="columns is-multiline handwriting is-size-7 no-print is-gapless"
+    style="margin:-0.65em 0 0.35em 0"
+  >
+    <div class="column is-one-third-tablet has-text-centered">
       <a @click="emitAddition(0)">[&#8593;+] Add Tier Above</a>
     </div>
-    <div class="column is-one-third-tablet has-text-centered is-paddingless">
+    <div class="column is-one-third-tablet has-text-centered">
       <a @click="emitAddition(tiers.length)">[&#8595;+] Add Tier Below</a>
     </div>
-    <div class="column is-one-third-tablet has-text-centered is-paddingless">
+    <div class="column is-one-third-tablet has-text-centered">
       <a class="has-text-danger" @click="$emit('reset')">[-] Clear Design</a>
     </div>
-    <div class="column is-full is-paddingless">
+    <div class="column is-full">
       <app-draw-line-svg/>
       <app-draw-line-svg style="margin:-0.65em 0;"/>
     </div>
