@@ -84,17 +84,16 @@
       <ul>
         <li>
           <a @click="launchColorPickerModal">
-            <app-color-swatch-svg :color="fill"/>Tier Color
+            <app-color-swatch-svg :color="fillColor"/>Tier Color
           </a>
           <input
             type="text"
-            v-model="fill"
+            v-model="fillColor"
             size="12"
             class="has-text-link has-text-left"
             style="padding-left:0.5em"
-            @blur="emitTierUpdate({...tier, fill: fill})"
-            @keydown.enter="emitTierUpdate({...tier, fill: fill})"
-            @keydown.delete="fill = $event.target.value.length > 2 ? $event.target.value : null"
+            placeholder="#FFF"
+            @blur="emitTierUpdate({...tier, fill: fillColor})"
           >
         </li>
       </ul>
@@ -120,6 +119,26 @@ export default {
     "app-color-swatch-svg": ColorSwatchSVG
   },
   props: {
+    tier: {
+      validator: function(obj) {
+        return (
+          obj.width &&
+          obj.height &&
+          obj.id &&
+          obj.key &&
+          typeof obj.width === "number" &&
+          typeof obj.height === "number"
+        );
+      },
+      default: [
+        {
+          id: `i${Math.floor(Math.random() * 10000)}`,
+          key: `k${Math.floor(Math.random() * 10000)}`,
+          width: 8,
+          height: 4
+        }
+      ]
+    },
     tiers: {
       validator: function(obj) {
         return obj.every(
@@ -156,17 +175,14 @@ export default {
     return {
       w: null,
       h: null,
-      shape: null,
+      s: null,
       fill: null
     };
   },
   computed: {
-    tier: function() {
-      return this.tiers[this.tierIndex];
-    },
     width: {
       get: function() {
-        return this.w;
+        return this.w ? this.w : this.tier.width;
       },
       set: function(val) {
         this.w = parseInt(val);
@@ -174,10 +190,26 @@ export default {
     },
     height: {
       get: function() {
-        return this.h;
+        return this.h ? this.h : this.tier.height;
       },
       set: function(val) {
         this.h = parseInt(val);
+      }
+    },
+    shape: {
+      get: function() {
+        return this.s ? this.s : this.tier.shape;
+      },
+      set: function(val) {
+        this.s = val;
+      }
+    },
+    fillColor: {
+      get: function() {
+        return this.fill ? this.fill : this.tier.fill;
+      },
+      set: function(val) {
+        this.fill = val;
       }
     }
   },
@@ -205,27 +237,21 @@ export default {
       this.$modal.open({
         parent: this,
         component: ColorPicker,
-        props: { fill: this.fill },
+        props: { fill: this.fillColor },
         hasModalCard: true,
         events: {
           "update:color": val => {
-            this.fill = val;
+            this.fillColor = val;
           },
           close: () => {
-            this.emitTierUpdate({ ...this.tier, fill: this.fill });
+            this.emitTierUpdate({ ...this.tier, fill: this.fillColor });
           }
         },
         onCancel: () => {
-          this.emitTierUpdate({ ...this.tier, fill: this.fill });
+          this.emitTierUpdate({ ...this.tier, fill: this.fillColor });
         }
       });
     }
-  },
-  mounted: function() {
-    this.fill = this.tier.fill ? this.tier.fill : "#FFF";
-    this.shape = this.tier.shape ? this.tier.shape : "round";
-    this.width = this.tier.width;
-    this.height = this.tier.height;
   }
 };
 </script>
@@ -264,7 +290,6 @@ export default {
   margin: 0 -0.5em;
   width: auto;
   text-align: center;
-  cursor: pointer;
 }
 
 .tier-menu-item ul li {

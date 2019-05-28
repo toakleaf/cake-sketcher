@@ -13,6 +13,7 @@
         :key="tier.key"
         :tierIndex="i"
         :tiers="tiersDesc"
+        :tier="tier"
         :open="openTierMenus.some(id => id === tier.id)"
         @open="openTierMenus.push(tier.id)"
         @close="openTierMenus = openTierMenus.filter(id => id !== tier.id)"
