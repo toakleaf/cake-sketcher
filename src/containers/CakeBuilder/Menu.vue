@@ -1,7 +1,6 @@
 <template>
   <div class="menu columns is-multiline is-gapless">
     <div class="column is-full">
-      {{openTierMenus}}
       <app-tier-menu
         v-for="(tier, i) in tiersDesc"
         :key="tier.key"
