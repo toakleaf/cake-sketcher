@@ -32,7 +32,7 @@ export default {
     },
     strokeColor: {
       type: String,
-      default: "grey"
+      default: "rgba(0,0,0,0.5)"
     },
     roughness: {
       type: Number,
