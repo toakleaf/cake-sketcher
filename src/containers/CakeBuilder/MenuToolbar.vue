@@ -82,12 +82,14 @@ export default {
         }
       }
       let out = this.tiers.slice();
+      // set shape to most common option
       const tally = { round: 0, square: 0, topsy: 0 };
       out.forEach(t => (tally[t.shape] += 1));
-      const mostPopularShape = Object.keys(tally).reduce((a, b) =>
+      const mostCommonShape = Object.keys(tally).reduce((a, b) =>
         tally[a] > tally[b] ? a : b
       );
-      newTier.shape = mostPopularShape;
+      newTier.shape = mostCommonShape;
+
       out.splice(index, 0, newTier);
       out.reverse();
       this.$emit("update:tiers", out);
