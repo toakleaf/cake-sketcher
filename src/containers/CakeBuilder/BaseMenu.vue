@@ -196,7 +196,6 @@ export default {
   margin: 0 -0.5em;
   width: auto;
   text-align: center;
-  cursor: pointer;
 }
 
 .base-menu-item ul li {
