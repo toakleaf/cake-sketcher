@@ -119,7 +119,7 @@ export default {
     },
     height: {
       get: function() {
-        return this.w > 13 ? 0.5 : 0.33;
+        return this.w > 14 ? 0.5 : 0.3;
       },
       set: function(val) {
         this.h = parseInt(val);

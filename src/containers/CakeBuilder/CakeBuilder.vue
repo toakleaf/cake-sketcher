@@ -65,7 +65,7 @@ export default {
             id: `i${Math.floor(Math.random() * 10000)}`,
             key: `k${Math.floor(Math.random() * 10000)}`,
             width: 12,
-            height: 0.5
+            height: 0.3
           }
         };
       }

@@ -2,26 +2,32 @@
   <div class="box modal-card">
     <swatches-picker :value="color" @input="emitColorHex" class="swatch"/>
     <slider-picker :value="color" @input="emitColorHex" class="slide"/>
-    <a class="button" style="margin:1em 1em 0.5em 1em;" @click="$emit('close')">close</a>
+    <a class="button" style="margin:1em 1em 0.5em 1em;" @click="$emit('close')">
+      <color-swatch-svg :color="color"/>awesome.
+    </a>
   </div>
 </template>
 
 <script>
 import { Swatches, Slider } from "vue-color";
+import ColorSwatchSVG from "@/containers/CakeBuilder/ColorSwatchSVG.vue";
 
 export default {
   components: {
     "swatches-picker": Swatches,
-    "slider-picker": Slider
+    "slider-picker": Slider,
+    "color-swatch-svg": ColorSwatchSVG
   },
   props: ["fill"],
   name: "ColorPicker",
   data: function() {
-    return {};
+    return {
+      hex: null
+    };
   },
   computed: {
     color: function() {
-      return this.fill ? this.fill : "#FFFFFF";
+      return this.hex ? this.hex : this.fill;
     }
   },
   methods: {
@@ -33,8 +39,8 @@ export default {
         obj.hex.slice(0, this.color.length) === this.color.toUpperCase()
       )
         return;
-      const hex = obj && obj.hex ? obj.hex : "#fff";
-      this.$emit("update:color", hex);
+      this.hex = obj && obj.hex ? obj.hex : "#FFFFFF";
+      this.$emit("update:color", this.hex);
       // this.$parent.close();
     }
   }
