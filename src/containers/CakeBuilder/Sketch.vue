@@ -92,7 +92,7 @@ export default {
     return {
       inch: 18.5,
       pad: 2,
-      radiusRatio: 9.25
+      radiusRatio: 4.625 // the ration of x radius / y radius
     };
   },
   computed: {
@@ -112,7 +112,7 @@ export default {
           this.tiers
             .map(o => (o.height ? o.height : 0))
             .reduce((accumulator, currentValue) => accumulator + currentValue) +
-        (this.cakeWidth / this.radiusRatio) * 2 +
+        (this.cakeWidth / 2 / this.radiusRatio) * 2 +
         this.pad * 2
       );
     }
@@ -124,11 +124,11 @@ export default {
       for (let j = this.tiers.length - 1; j > i; j--) {
         const tierGap =
           this.tiers[j - 1] && this.tiers[j - 1].width
-            ? this.tiers[j - 1].width - this.tiers[j].width
+            ? (this.tiers[j - 1].width - this.tiers[j].width) / 2
             : 0;
         pos += this.tiers[j].height
           ? this.tiers[j].height * this.inch -
-            (tierGap * this.inch) / this.radiusRatio / 2
+            (tierGap * this.inch) / 2 / this.radiusRatio
           : 0;
       }
       return pos;

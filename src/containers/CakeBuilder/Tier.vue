@@ -49,7 +49,7 @@ export default {
     },
     radiusRatio: {
       type: Number,
-      default: 9.25
+      default: 4.625
     },
     background: {
       type: String
@@ -84,9 +84,16 @@ export default {
       return this.height * this.inch;
     },
     yRadius: function() {
-      return this.ptWidth / this.radiusRatio;
+      return this.ptWidth / 2 / this.radiusRatio;
     },
     pathString: function() {
+      // 16x4 tier w/ 18.5 pt inch
+      //   M 2,34
+      //   a148,32 0 1,0 296,0
+      //   a148,32 0 1,0 -296,0
+      //   v74
+      //   a148,32 0 1,0 296,0
+      //   v-74
       return `M ${this.pad},${this.yRadius + this.pad}
       a${this.ptWidth / 2},${this.yRadius} 0 1,0 ${this.ptWidth},0
       a${this.ptWidth / 2},${this.yRadius} 0 1,0 -${this.ptWidth},0
@@ -129,7 +136,6 @@ export default {
   },
   methods: {},
   mounted: function() {
-    // console.log(this.tier);
     this.$refs.tier.appendChild(this.blank);
     this.$refs.tier.appendChild(this.tier);
   }
