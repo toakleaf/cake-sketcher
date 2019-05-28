@@ -22,7 +22,7 @@ import DrawLineSVG from "@/containers/CakeBuilder/DrawLineSVG.vue";
 
 export default {
   name: "MenuToolbar",
-  props: ["tiers"], //tiers in descending order
+  props: ["tiers", "base"], //tiers in descending order
   components: {
     "app-tier-menu": TierMenu,
     "app-draw-line-svg": DrawLineSVG
@@ -57,6 +57,15 @@ export default {
               this.tiers[index - 1].width >= this.maxTierWidth - 2
                 ? this.maxTierWidth
                 : this.tiers[index - 1].width + 2;
+            if (newTier.width > this.base.width) {
+              //if bottom too big, rescale base
+              console.log(newTier.width);
+              this.$emit("update:base", {
+                ...this.base,
+                width: newTier.width + 4,
+                key: `k${Math.floor(Math.random() * 10000)}`
+              });
+            }
             break;
 
           default:

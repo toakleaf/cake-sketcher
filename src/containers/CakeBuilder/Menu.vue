@@ -3,7 +3,9 @@
     <div class="column is-full">
       <app-menu-toolbar
         :tiers="tiersDesc"
+        :base="base"
         @update:tiers="$emit('update:tiers', $event)"
+        @update:base="$emit('update:base', $event)"
         @reset="$emit('reset'); openMenus = []"
       />
     </div>
@@ -60,52 +62,18 @@ export default {
   },
   methods: {
     emitChanges: function(i, val) {
-      if (i < 0) this.$emit("update:base", val);
+      if (i < 0) return this.$emit("update:base", val);
       const out = this.tiersDesc.slice();
       out[i] = val;
+      if (i === out.length - 1 && out[i].width > this.base.width) {
+        // if bottom tier and too big, rescale base
+        this.$emit("update:base", {
+          ...this.base,
+          width: out[i].width + 4,
+          key: `k${Math.floor(Math.random() * 10000)}`
+        });
+      }
       this.$emit("update:tiers", out.reverse());
-    },
-    emitAddition: function(
-      index = 0,
-      newTier = {
-        id: `i${Math.floor(Math.random() * 10000)}`,
-        key: `k${Math.floor(Math.random() * 10000)}`,
-        width: 8,
-        height: 4
-      }
-    ) {
-      if (this.tiersDesc.length) {
-        //keep default if adding first item
-        switch (index) {
-          case 0: //top
-            newTier.width =
-              this.tiersDesc[index].width <= this.minTierWidth + 2
-                ? this.minTierWidth
-                : this.tiersDesc[index].width - 2;
-            break;
-          case this.tiersDesc.length: //bottom
-            newTier.width =
-              this.tiersDesc[index - 1].width >= this.maxTierWidth - 2
-                ? this.maxTierWidth
-                : this.tiersDesc[index - 1].width + 2;
-            break;
-
-          default:
-            //middle or > array length
-            newTier.width =
-              index >= this.tiersDesc.length
-                ? this.tiersDesc[this.tiersDesc.length].width
-                : parseInt(
-                    this.tiersDesc[index].width +
-                      this.tiersDesc[index - 1].width / 2
-                  );
-            break;
-        }
-      }
-      let out = this.tiersDesc.slice();
-      out.splice(index, 0, newTier);
-      out.reverse();
-      this.$emit("update:tiers", out);
     },
     emitDeletion: function(i) {
       this.openMenus = this.openMenus.filter(id => id !== this.tiersDesc[i].id);
