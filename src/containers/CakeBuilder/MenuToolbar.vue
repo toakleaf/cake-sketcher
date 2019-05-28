@@ -59,7 +59,6 @@ export default {
                 : this.tiers[index - 1].width + 2;
             if (newTier.width > this.base.width) {
               //if bottom too big, rescale base
-              console.log(newTier.width);
               this.$emit("update:base", {
                 ...this.base,
                 width: newTier.width + 4,
