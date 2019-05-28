@@ -17,7 +17,6 @@
           <app-draw-svg-icon path="M1,150,l149,149,l149,-149,l-149,149,l-149,-149" v-show="open"/>
         </span>
         <span class="is-size-7 is-pulled-right" style="margin:1em 1em 0 0">{{width}}" x {{height}}"</span>
-        {{open}}
       </h3>
       <ul>
         <li>
@@ -156,7 +155,6 @@ export default {
   },
   data: function() {
     return {
-      // open: false,
       w: null,
       h: null,
       s: null,
@@ -239,10 +237,6 @@ export default {
       });
     }
   }
-  // mounted: function() {
-  //   console.log(this.show, this.tier.id);
-  //   this.open = this.show;
-  // }
 };
 </script>
 
