@@ -9,6 +9,7 @@
 </template>
 
 <script>
+import hexColorLuminance from "@/assets/scripts/hexColorLuminance";
 const rough = require("roughjs/dist/rough.umd");
 
 export default {
@@ -51,11 +52,10 @@ export default {
       default: 9.25
     },
     background: {
-      type: String,
-      default: "white"
+      type: String
     },
     fill: {
-      type: String
+      type: String //Must be hex!
     },
     fillStyle: {
       type: String,
@@ -113,11 +113,16 @@ export default {
     },
     blank: function() {
       const rs = rough.svg(this.$refs.tier);
+      const fill = this.fill
+        ? hexColorLuminance(this.fill, 0.33)
+        : this.background
+        ? this.background
+        : "white";
       return rs.path(this.pathString, {
         bowing: 0,
         roughness: 0,
         strokeWidth: 0,
-        fill: this.background,
+        fill,
         fillStyle: "solid"
       });
     }

@@ -4,7 +4,7 @@
 // colorLuminance("69C", -0.5);	// "#334d66" - 50% darker
 // colorLuminance("000", 1);		// "#000000" - true black cannot be made lighter!
 
-const colorLuminance = function(hex, lum) {
+const colorLuminance = function(hex, lum = 0) {
   // validate hex string
   hex = String(hex).replace(/[^0-9a-f]/gi, '');
   if (hex.length < 6) {
