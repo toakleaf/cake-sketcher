@@ -175,9 +175,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-#tier {
-  border: solid 2px;
-  border-color: darkgray;
+svg {
   overflow: visible;
 }
 </style>
