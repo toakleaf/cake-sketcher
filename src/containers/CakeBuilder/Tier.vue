@@ -1,11 +1,31 @@
 <template>
-  <svg
-    version="1.1"
-    id="tier"
-    ref="tier"
-    xmlns="http://www.w3.org/2000/svg"
-    xmlns:xlink="http://www.w3.org/1999/xlink"
-  ></svg>
+  <g>
+    <svg
+      version="1.1"
+      class="tier"
+      ref="tier"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+    ></svg>
+    <svg
+      version="1.1"
+      id="dots"
+      ref="dots"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+    >
+      <circle
+        v-for="n in 9"
+        :key="n"
+        :cx="ptWidth / 8 * (n - 1) + pad"
+        :cy="yRadius + pad + ellipseYOffset(ptWidth / 2 + pad, 0, ptWidth / 2, yRadius, ptWidth / 8 * (n - 1) + pad)"
+        r="2"
+        stroke="black"
+        stroke-width="1"
+        fill="red"
+      ></circle>
+    </svg>
+  </g>
 </template>
 
 <script>
@@ -166,7 +186,18 @@ export default {
       });
     }
   },
-  methods: {},
+  methods: {
+    ellipseYOffset: function(h, k, a, b, x) {
+      // center: (h, k)
+      // horizontal rad: a
+      // vertical rad: b
+      // elipse point: (x, y)
+      // (x-h)^2 / a^2 + (y-k)^2 / b^2 = 1
+      // y = k +- b sqrt( 1 - ( x^2  - 2xh + h^2) / a^2 )
+      let y = k + b * Math.sqrt(1 - (x * x - 2 * x * h + h * h) / (a * a));
+      return y;
+    }
+  },
   mounted: function() {
     this.$refs.tier.appendChild(this.blank);
     this.$refs.tier.appendChild(this.tier);
