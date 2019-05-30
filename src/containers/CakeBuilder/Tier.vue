@@ -14,16 +14,18 @@
       xmlns="http://www.w3.org/2000/svg"
       xmlns:xlink="http://www.w3.org/1999/xlink"
     >
-      <circle
-        v-for="n in 11"
-        :key="n"
-        :cx="xRectToCylinder(ptWidth * Math.PI / 2, ptWidth, (ptWidth * Math.PI / 2) / 10 * (n - 1)) + pad"
-        :cy="yRadius + pad + ellipseYOffset(ptWidth / 2 + pad, 0, ptWidth / 2, yRadius, xRectToCylinder(ptWidth * Math.PI / 2, ptWidth, (ptWidth * Math.PI / 2) / 10 * (n - 1)) + pad)"
-        r="2"
-        stroke="black"
-        stroke-width="1"
-        fill="red"
-      ></circle>
+      <g v-for="m in 5" :key="m">
+        <circle
+          v-for="n in 11"
+          :key="n"
+          :cx="xRectToCylinder(ptWidth * Math.PI / 2, ptWidth, (ptWidth * Math.PI / 2) / 10 * (n - 1)) + pad"
+          :cy="yRadius + pad + (ptHeight / 4)*(m-1)  + ellipseYOffset(ptWidth / 2, 0, ptWidth / 2, yRadius, xRectToCylinder(ptWidth * Math.PI / 2, ptWidth, (ptWidth * Math.PI / 2) / 10 * (n - 1)))"
+          r="2"
+          stroke="black"
+          stroke-width="0.5"
+          fill="lightblue"
+        ></circle>
+      </g>
     </svg>
   </g>
 </template>
