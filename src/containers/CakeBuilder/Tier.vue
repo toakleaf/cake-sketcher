@@ -15,10 +15,10 @@
       xmlns:xlink="http://www.w3.org/1999/xlink"
     >
       <circle
-        v-for="n in 9"
+        v-for="n in 11"
         :key="n"
-        :cx="ptWidth / 8 * (n - 1) + pad"
-        :cy="yRadius + pad + ellipseYOffset(ptWidth / 2 + pad, 0, ptWidth / 2, yRadius, ptWidth / 8 * (n - 1) + pad)"
+        :cx="xRectToCylinder(ptWidth * Math.PI / 2, ptWidth, (ptWidth * Math.PI / 2) / 10 * (n - 1)) + pad"
+        :cy="yRadius + pad + ellipseYOffset(ptWidth / 2 + pad, 0, ptWidth / 2, yRadius, xRectToCylinder(ptWidth * Math.PI / 2, ptWidth, (ptWidth * Math.PI / 2) / 10 * (n - 1)) + pad)"
         r="2"
         stroke="black"
         stroke-width="1"
@@ -193,9 +193,18 @@ export default {
       // vertical rad: b
       // elipse point: (x, y)
       // (x-h)^2 / a^2 + (y-k)^2 / b^2 = 1
+      // therefore
       // y = k +- b sqrt( 1 - ( x^2  - 2xh + h^2) / a^2 )
       let y = k + b * Math.sqrt(1 - (x * x - 2 * x * h + h * h) / (a * a));
       return y;
+    },
+    xRectToCylinder: function(width, diameter, x) {
+      // width is understood to be 1/2 circumference of a tier (which is longer than diameter)
+      const percent = x / width;
+      const angle = percent * Math.PI; // in radians from 0 to pi
+      // center of tier being projected onto
+      const center = diameter / 2;
+      return center - Math.cos(angle) * center;
     }
   },
   mounted: function() {
