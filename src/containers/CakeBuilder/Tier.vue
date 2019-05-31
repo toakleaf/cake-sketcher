@@ -100,7 +100,9 @@ export default {
     }
   },
   data: function() {
-    return {};
+    return {
+      r: 2
+    };
   },
   computed: {
     ptWidth: function() {
@@ -207,6 +209,12 @@ export default {
       // center of tier being projected onto
       const center = diameter / 2;
       return center - Math.cos(angle) * center;
+    },
+    mousePosition(event) {
+      console.log(
+        event.pageX - this.$refs.tier.getBoundingClientRect().left,
+        event.pageY - this.$refs.tier.getBoundingClientRect().top
+      );
     }
   },
   mounted: function() {
