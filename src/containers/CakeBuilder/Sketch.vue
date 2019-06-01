@@ -18,6 +18,7 @@
         :width="tier.width"
         :height="tier.height"
         :shape="tier.shape"
+        :previousTier="tiers[i-1] ? tiers[i-1] : null"
         :fill="tier.fill"
         :fillStyle="tier.fillStyle"
         :fillWeight="tier.fillWeight"
@@ -61,11 +62,11 @@ export default {
     },
     roughness: {
       type: Number,
-      default: 0 //0.7
+      default: 0.7
     },
     bowing: {
       type: Number,
-      default: 0 //7
+      default: 7
     },
     tiers: {
       validator: function(obj) {
