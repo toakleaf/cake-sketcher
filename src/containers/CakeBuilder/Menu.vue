@@ -64,8 +64,14 @@ export default {
     emitChanges: function(i, val) {
       if (i < 0) return this.$emit("update:base", val);
       let out = this.tiersDesc.slice();
+      // refresh upper tier.
+      if (out[i - 1] && out[i].shape !== val.shape) {
+        out[i - 1] = {
+          ...out[i - 1],
+          key: `k${Math.floor(Math.random() * 10000)}`
+        };
+      }
       out[i] = { ...val };
-
       if (i === out.length - 1 && out[i].width > this.base.width) {
         // if bottom tier and too big, rescale base
         this.$emit("update:base", {

@@ -27,7 +27,8 @@
           >
             <option value="round">Round</option>
             <option value="square">Square</option>
-            <option value="topsyturvy">Topsy Turvy</option>
+            <option value="topsy_turvy_up">Topsy Turvy Up</option>
+            <option value="topsy_turvy_down">Topsy Turvy Down</option>
           </select>
         </li>
         <li>

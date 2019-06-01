@@ -18,6 +18,7 @@
         :width="tier.width"
         :height="tier.height"
         :shape="tier.shape"
+        :previousTier="tiers[i-1] ? tiers[i-1] : null"
         :fill="tier.fill"
         :fillStyle="tier.fillStyle"
         :fillWeight="tier.fillWeight"
