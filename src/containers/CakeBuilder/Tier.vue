@@ -210,7 +210,8 @@ export default {
       const corners = [0, this.ptWidth, 0, this.ptWidth];
       if (
         this.shape === "topsy_turvy_up" ||
-        this.shape === "topsy_turvy_down"
+        this.shape === "topsy_turvy_down" ||
+        this.shape === "round_taper"
       ) {
         corners[2] =
           ((this.taper / this.height) *
