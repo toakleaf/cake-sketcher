@@ -111,6 +111,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@/assets/styles/main.scss";
+
 .sketch {
   max-height: 78vh;
 }
@@ -128,6 +130,9 @@ export default {
   width: auto;
   height: auto;
   text-align: left;
+}
+.invisible-input:hover {
+  color: $link;
 }
 </style>
 
