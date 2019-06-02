@@ -42,6 +42,7 @@
 
 <script>
 import hexColorLuminance from "@/assets/scripts/hexColorLuminance";
+import parseSVG from "@/assets/scripts/svgPathParser";
 const rough = require("roughjs/dist/rough.umd");
 
 export default {
