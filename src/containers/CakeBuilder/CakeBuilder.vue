@@ -6,7 +6,11 @@
         <i>by</i> Oakleaf Cakes Bake Shop
       </h2>
 
-      <app-sketch :tiers="[...(base ? [base] : []), ...tiers]" class="sketch"/>
+      <app-sketch :tiers="[...(base ? [base] : []), ...tiers]" :showBanana="banana" class="sketch"/>
+      <a class="is-size-7 handwriting" @click="banana = !banana">
+        <span v-if="banana">[&#10003;]</span>
+        <span v-else>[]</span> banana for scale
+      </a>
     </div>
     <div class="column handwriting">
       <div class="columns is-multiline">
@@ -83,7 +87,8 @@ export default {
     return {
       find: [],
       tiers: [],
-      base: {}
+      base: {},
+      banana: false
     };
   },
   computed: {

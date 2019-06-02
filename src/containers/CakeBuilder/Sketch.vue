@@ -134,6 +134,7 @@ export default {
       return this.inch * this.cakeHeight;
     },
     banana: function() {
+      if (!this.showBanana) return;
       const rs = rough.svg(this.$refs.banana);
       return rs.path(
         `M260.755,23.17l-2.532,36.951l1.66,11.76c-1.383,30.929-11.974,65.163-29.102,88.231c-27.87,37.532-64.532,53.392-106.038,55.022
@@ -179,6 +180,15 @@ export default {
   },
   mounted: function() {
     if (this.showBanana) this.$refs.banana.appendChild(this.banana);
+  },
+  watch: {
+    showBanana: function() {
+      if (this.showBanana) this.$refs.banana.appendChild(this.banana);
+      else
+        while (this.$refs.banana.firstChild) {
+          this.$refs.banana.removeChild(this.$refs.banana.firstChild);
+        }
+    }
   }
 };
 </script>
