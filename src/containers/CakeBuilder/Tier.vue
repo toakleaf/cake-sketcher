@@ -123,9 +123,7 @@ export default {
     }
   },
   data: function() {
-    return {
-      r: 2
-    };
+    return {};
   },
   computed: {
     ptWidth: function() {
