@@ -5,6 +5,7 @@
 // colorLuminance("000", 1);		// "#000000" - true black cannot be made lighter!
 
 const colorLuminance = function(hex, lum = 0) {
+  if (hex === '#') return '#FFFFFF';
   // validate hex string
   hex = String(hex).replace(/[^0-9a-f]/gi, '');
   if (hex.length < 6) {
