@@ -7,15 +7,15 @@
       </h2>
 
       <app-sketch :tiers="[...(base ? [base] : []), ...tiers]" :showBanana="banana" class="sketch"/>
-      <a class="is-size-7 handwriting" @click="banana = !banana">
+      <a class="is-size-7 handwriting no-print" @click="banana = !banana">
         <span v-if="banana">[&#10003;]</span>
-        <span v-else>[]</span> banana for scale
+        <span v-else>[ ]</span> banana for scale
       </a>
     </div>
     <div class="column handwriting">
       <div class="columns is-multiline">
-        <div class="column is-two-thirds">
-          <h4 class="subtitle is-size-3">New Cake Sketch 1</h4>
+        <div class="column is-two-thirds invisible-input">
+          <input type="text" class="subtitle is-size-3 handwriting" v-model="title">
         </div>
         <div class="column">
           <h4 class="subtitle is-size-6 has-text-right is-marginless">
@@ -29,12 +29,7 @@
           <app-draw-line-svg style="margin:-0.65em 0;"/>
         </div>
       </div>
-      <app-menu
-        :tiers.sync="tiers"
-        :base.sync="base"
-        @reset="restoreDefault()"
-        @update:tiers="find = $event"
-      />
+      <app-menu :tiers.sync="tiers" :base.sync="base" @reset="restoreDefault()"/>
     </div>
   </div>
 </template>
@@ -56,6 +51,7 @@ export default {
     defaultCake: {
       default: function() {
         return {
+          title: "New Cake Sketch 1",
           tiers: [
             {
               id: `i${Math.floor(Math.random() * 10000)}`,
@@ -85,7 +81,7 @@ export default {
   },
   data: function() {
     return {
-      find: [],
+      title: "",
       tiers: [],
       base: {},
       banana: false
@@ -103,6 +99,7 @@ export default {
       return getServings(width, height, servingSize, shape);
     },
     restoreDefault: function() {
+      this.title = this.defaultCake.title;
       this.tiers = this.defaultCake.tiers;
       this.base = this.defaultCake.base;
     }
@@ -114,8 +111,28 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@/assets/styles/main.scss";
+
 .sketch {
   max-height: 78vh;
+}
+.invisible-input input,
+.invisible-input input:focus {
+  font-family: inherit;
+  font-size: inherit;
+  // text-decoration: underline;
+  color: inherit;
+  border: 0;
+  // border-bottom: 1pt solid;
+  outline: 0;
+  background: transparent;
+  margin: 0 -0.5em;
+  width: auto;
+  height: auto;
+  text-align: left;
+}
+.invisible-input:hover {
+  color: $link;
 }
 </style>
 

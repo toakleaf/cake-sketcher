@@ -71,7 +71,7 @@ export default {
       type: Number,
       default: 1.5
     },
-    chamfer: {
+    taper: {
       // how much smaller bottom diameter is than top
       type: Number,
       default: 1
@@ -210,15 +210,16 @@ export default {
       const corners = [0, this.ptWidth, 0, this.ptWidth];
       if (
         this.shape === "topsy_turvy_up" ||
-        this.shape === "topsy_turvy_down"
+        this.shape === "topsy_turvy_down" ||
+        this.shape === "round_taper"
       ) {
         corners[2] =
-          ((this.chamfer / this.height) *
+          ((this.taper / this.height) *
             (this.yCornerOffsets[2] - this.yCornerOffsets[0])) /
           2;
         corners[3] =
           this.ptWidth -
-          ((this.chamfer / this.height) *
+          ((this.taper / this.height) *
             (this.yCornerOffsets[3] - this.yCornerOffsets[1])) /
             2;
       }
