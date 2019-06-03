@@ -72,11 +72,11 @@ export default {
     },
     roughness: {
       type: Number,
-      default: 0.7
+      default: 0 //0.7
     },
     bowing: {
       type: Number,
-      default: 7
+      default: 0 //7
     },
     showBanana: {
       type: Boolean,

@@ -7,46 +7,25 @@
       xmlns="http://www.w3.org/2000/svg"
       xmlns:xlink="http://www.w3.org/1999/xlink"
     ></svg>
-    <svg
-      version="1.1"
-      id="dots"
-      ref="dots"
-      xmlns="http://www.w3.org/2000/svg"
-      xmlns:xlink="http://www.w3.org/1999/xlink"
-    >
-      <!-- <g v-for="m in 5" :key="m">
-        <circle
-          v-for="n in 11"
-          :key="n"
-          :cx="xRectToCylinder(ptWidth * Math.PI / 2, ptWidth, (ptWidth * Math.PI / 2) / 10 * (n - 1)) "
-          :cy="yRadius  + (ptHeight / 4)*(m-1)  + ellipseYOffset(xRadius, 0, xRadius, yRadius, xRectToCylinder(ptWidth * Math.PI / 2, ptWidth, (ptWidth * Math.PI / 2) / 10 * (n - 1)))"
-          r="2"
-          stroke="black"
-          stroke-width="0.5"
-          fill="lightblue"
-        ></circle>
-      </g>-->
-      <!-- <path
-        fill="transparent"
-        stroke="black"
-        :d="`M 0 ${yRadius } A${xRadius} ${yRadius} ${arcRotation(0, 0, ptWidth, ptHeight )} 0 0 ${ptWidth} ${yRadius  + ptHeight}`"
-      ></path>
-      <path
-        fill="transparent"
-        stroke="black"
-        :d="`M 0 ${yRadius + ptHeight } A${xRadius} ${yRadius} ${arcRotation(0, ptHeight , ptWidth, 0)} 0 0 ${ptWidth} ${yRadius }`"
-      ></path>-->
-    </svg>
+    <app-tier-face
+      :shape="shape"
+      :corners="xCornerOffsets.map((x,i) => [x, yCornerOffsets[i]])"
+      :xRadius="xRadius"
+      :yRadius="yRadius"
+    />
   </g>
 </template>
 
 <script>
 import hexColorLuminance from "@/assets/scripts/hexColorLuminance";
-import parseSVG from "@/assets/scripts/svgPathParser";
+import TierFace from "@/containers/CakeBuilder/TierFace.vue";
 const rough = require("roughjs/dist/rough.umd");
 
 export default {
   name: "tier",
+  components: {
+    "app-tier-face": TierFace
+  },
   props: {
     width: {
       type: Number,
@@ -311,38 +290,7 @@ export default {
       });
     }
   },
-  methods: {
-    ellipseYOffset: function(h, k, a, b, x) {
-      // center: (h, k)
-      // horizontal rad: a
-      // vertical rad: b
-      // elipse point: (x, y)
-      // (x-h)^2 / a^2 + (y-k)^2 / b^2 = 1
-      // therefore
-      // y = k +- b sqrt( 1 - ( x^2  - 2xh + h^2) / a^2 )
-      let y = k + b * Math.sqrt(1 - (x * x - 2 * x * h + h * h) / (a * a));
-      return y;
-    },
-    xRectToCylinder: function(width, diameter, x) {
-      // width is understood to be 1/2 circumference of a tier (which is longer than diameter)
-      const percent = x / width;
-      const angle = percent * Math.PI; // in radians from 0 to pi
-      // center of tier being projected onto
-      const center = diameter / 2;
-      return center - Math.cos(angle) * center;
-    },
-    arcRotation: function(x, y, dx, dy) {
-      const rad = 180 / Math.PI;
-      const atan = Math.atan2(dy - y, dx - x);
-      return rad * atan;
-    },
-    mousePosition(event) {
-      console.log(
-        event.pageX - this.$refs.tier.getBoundingClientRect().left,
-        event.pageY - this.$refs.tier.getBoundingClientRect().top
-      );
-    }
-  },
+  methods: {},
   mounted: function() {
     this.$refs.tier.appendChild(this.blank);
     this.$refs.tier.appendChild(this.tier);
